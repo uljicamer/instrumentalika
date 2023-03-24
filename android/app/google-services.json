@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "143658063553",
+    "project_id": "instrumentalika-f70dd",
+    "storage_bucket": "instrumentalika-f70dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:143658063553:android:cdadc34c02928931e9a640",
+        "android_client_info": {
+          "package_name": "com.mycompany.instrumentalika"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "143658063553-te66p5jh07fus1hnpr2kaib70j7hbmbi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.instrumentalika",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "143658063553-l0mvarpjmn6ia9eqa3h78a748rf14150.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5ziEZBmQWYwQdW9oNSiK8fmtrzEfJRPk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "143658063553-l0mvarpjmn6ia9eqa3h78a748rf14150.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "143658063553-d8v3k3db6sj9aniomqt64gsoit2hfhi3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.instrumentalika"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

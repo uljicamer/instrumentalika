@@ -69,14 +69,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) => appStateNotifier.loggedIn
-          ? DashboardWidget()
+          ? NavBarPage()
           : AuthenticationLoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
-              ? DashboardWidget()
+              ? NavBarPage()
               : AuthenticationLoginWidget(),
         ),
         FFRoute(
@@ -87,17 +87,67 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'dashboard',
           path: '/dashboard',
-          builder: (context, params) => DashboardWidget(),
+          builder: (context, params) => NavBarPage(
+            initialPage: '',
+            page: DashboardWidget(),
+          ),
         ),
         FFRoute(
-          name: 'product_page',
-          path: '/productPage',
-          builder: (context, params) => ProductPageWidget(),
+          name: 'product_page_bas',
+          path: '/productPageBas',
+          builder: (context, params) => NavBarPage(
+            initialPage: '',
+            page: ProductPageBasWidget(),
+          ),
         ),
         FFRoute(
           name: 'onboarding_screen',
           path: '/onboardingScreen',
           builder: (context, params) => OnboardingScreenWidget(),
+        ),
+        FFRoute(
+          name: 'user_profile',
+          path: '/userProfile',
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'user_profile')
+              : NavBarPage(
+                  initialPage: 'user_profile',
+                  page: UserProfileWidget(),
+                ),
+        ),
+        FFRoute(
+          name: 'fav_items',
+          path: '/favItems',
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'fav_items')
+              : NavBarPage(
+                  initialPage: 'fav_items',
+                  page: FavItemsWidget(),
+                ),
+        ),
+        FFRoute(
+          name: 'product_page_gitara',
+          path: '/productPageGitara',
+          builder: (context, params) => NavBarPage(
+            initialPage: '',
+            page: ProductPageGitaraWidget(),
+          ),
+        ),
+        FFRoute(
+          name: 'product_page_klavijatura',
+          path: '/productPageKlavijatura',
+          builder: (context, params) => NavBarPage(
+            initialPage: '',
+            page: ProductPageKlavijaturaWidget(),
+          ),
+        ),
+        FFRoute(
+          name: 'product_page_ostalo',
+          path: '/productPageOstalo',
+          builder: (context, params) => NavBarPage(
+            initialPage: '',
+            page: ProductPageOstaloWidget(),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,

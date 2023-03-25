@@ -33,6 +33,9 @@ abstract class ListingsRecord
 
   int? get quantity;
 
+  @BuiltValueField(wireName: 'Images')
+  String? get images;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -44,7 +47,8 @@ abstract class ListingsRecord
     ..price = 0.0
     ..onSale = false
     ..salePrice = 0.0
-    ..quantity = 0;
+    ..quantity = 0
+    ..images = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('listings');
@@ -77,6 +81,7 @@ Map<String, dynamic> createListingsRecordData({
   bool? onSale,
   double? salePrice,
   int? quantity,
+  String? images,
 }) {
   final firestoreData = serializers.toFirestore(
     ListingsRecord.serializer,
@@ -90,7 +95,8 @@ Map<String, dynamic> createListingsRecordData({
         ..modifiedAt = modifiedAt
         ..onSale = onSale
         ..salePrice = salePrice
-        ..quantity = quantity,
+        ..quantity = quantity
+        ..images = images,
     ),
   );
 

@@ -83,6 +83,13 @@ class _$ListingsRecordSerializer
         ..add('quantity')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.images;
+    if (value != null) {
+      result
+        ..add('Images')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -142,6 +149,10 @@ class _$ListingsRecordSerializer
           result.quantity = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'Images':
+          result.images = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -175,6 +186,8 @@ class _$ListingsRecord extends ListingsRecord {
   @override
   final int? quantity;
   @override
+  final String? images;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ListingsRecord([void Function(ListingsRecordBuilder)? updates]) =>
@@ -190,6 +203,7 @@ class _$ListingsRecord extends ListingsRecord {
       this.onSale,
       this.salePrice,
       this.quantity,
+      this.images,
       this.ffRef})
       : super._();
 
@@ -214,6 +228,7 @@ class _$ListingsRecord extends ListingsRecord {
         onSale == other.onSale &&
         salePrice == other.salePrice &&
         quantity == other.quantity &&
+        images == other.images &&
         ffRef == other.ffRef;
   }
 
@@ -229,6 +244,7 @@ class _$ListingsRecord extends ListingsRecord {
     _$hash = $jc(_$hash, onSale.hashCode);
     _$hash = $jc(_$hash, salePrice.hashCode);
     _$hash = $jc(_$hash, quantity.hashCode);
+    _$hash = $jc(_$hash, images.hashCode);
     _$hash = $jc(_$hash, ffRef.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -246,6 +262,7 @@ class _$ListingsRecord extends ListingsRecord {
           ..add('onSale', onSale)
           ..add('salePrice', salePrice)
           ..add('quantity', quantity)
+          ..add('images', images)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -292,6 +309,10 @@ class ListingsRecordBuilder
   int? get quantity => _$this._quantity;
   set quantity(int? quantity) => _$this._quantity = quantity;
 
+  String? _images;
+  String? get images => _$this._images;
+  set images(String? images) => _$this._images = images;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -312,6 +333,7 @@ class ListingsRecordBuilder
       _onSale = $v.onSale;
       _salePrice = $v.salePrice;
       _quantity = $v.quantity;
+      _images = $v.images;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -344,6 +366,7 @@ class ListingsRecordBuilder
             onSale: onSale,
             salePrice: salePrice,
             quantity: quantity,
+            images: images,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

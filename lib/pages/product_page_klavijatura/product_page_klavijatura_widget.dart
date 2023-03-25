@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,12 @@ import 'product_page_klavijatura_model.dart';
 export 'product_page_klavijatura_model.dart';
 
 class ProductPageKlavijaturaWidget extends StatefulWidget {
-  const ProductPageKlavijaturaWidget({Key? key}) : super(key: key);
+  const ProductPageKlavijaturaWidget({
+    Key? key,
+    this.kategorijaKlavijatura,
+  }) : super(key: key);
+
+  final DocumentReference? kategorijaKlavijatura;
 
   @override
   _ProductPageKlavijaturaWidgetState createState() =>
@@ -61,7 +67,7 @@ class _ProductPageKlavijaturaWidgetState
           },
         ),
         title: Text(
-          'Instrumentalika',
+          'Klavijature',
           style: FlutterFlowTheme.of(context).title1.override(
                 fontFamily: 'Roboto',
                 color: Color(0xFFF0F0F0),
@@ -102,7 +108,7 @@ class _ProductPageKlavijaturaWidgetState
                       controller: _model.searchFieldController,
                       obscureText: false,
                       decoration: InputDecoration(
-                        hintText: 'Type to search here...',
+                        hintText: 'Pretrazite kategoriju...',
                         hintStyle:
                             FlutterFlowTheme.of(context).bodyText2.override(
                                   fontFamily: 'Lexend Deca',
@@ -160,7 +166,14 @@ class _ProductPageKlavijaturaWidgetState
           ),
           Expanded(
             child: StreamBuilder<List<ListingsRecord>>(
-              stream: queryListingsRecord(),
+              stream: queryListingsRecord(
+                queryBuilder: (listingsRecord) =>
+                    listingsRecord.where('specifications',
+                        isEqualTo: valueOrDefault<String>(
+                          widget.kategorijaKlavijatura?.id,
+                          'Klavijatura',
+                        )),
+              ),
               builder: (context, snapshot) {
                 // Customize what your widget looks like when it's loading.
                 if (!snapshot.hasData) {
@@ -214,7 +227,7 @@ class _ProductPageKlavijaturaWidgetState
                             image: DecorationImage(
                               fit: BoxFit.cover,
                               image: Image.network(
-                                'https://images.pexels.com/photos/3428498/pexels-photo-3428498.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                                listViewListingsRecord.images!,
                               ).image,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
@@ -222,134 +235,148 @@ class _ProductPageKlavijaturaWidgetState
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 2.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 16.0, 16.0, 0.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          'Lorem ipsum',
-                                          style: FlutterFlowTheme.of(context)
-                                              .title1
-                                              .override(
-                                                fontFamily: 'Lexend Deca',
-                                                color: Colors.white,
-                                                fontSize: 24.0,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: Colors.white,
-                                        size: 24.0,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 4.0, 16.0, 0.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          'Lorem ipsum',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Lexend Deca',
-                                                color: Color(0xFF39D2C0),
-                                                fontSize: 14.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Padding(
+                            child: InkWell(
+                              onTap: () async {
+                                context.pushNamed(
+                                  'productPage',
+                                  queryParams: {
+                                    'docRef': serializeParam(
+                                      listViewListingsRecord.reference,
+                                      ParamType.DocumentReference,
+                                    ),
+                                  }.withoutNulls,
+                                );
+                              },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 4.0, 16.0, 16.0),
+                                        16.0, 16.0, 16.0, 0.0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
                                       children: [
-                                        FFButtonWidget(
-                                          onPressed: () {
-                                            print('Button-Reserve pressed ...');
-                                          },
-                                          text: 'Reserve',
-                                          icon: Icon(
-                                            Icons.add_rounded,
-                                            color: Colors.white,
-                                            size: 15.0,
-                                          ),
-                                          options: FFButtonOptions(
-                                            width: 120.0,
-                                            height: 40.0,
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: Color(0xFF39D2C0),
-                                            textStyle: GoogleFonts.getFont(
-                                              'Lexend Deca',
-                                              color: Colors.white,
-                                              fontSize: 14.0,
-                                            ),
-                                            elevation: 3.0,
-                                            borderSide: BorderSide(
-                                              color: Colors.transparent,
-                                              width: 1.0,
-                                            ),
+                                        Expanded(
+                                          child: Text(
+                                            listViewListingsRecord.name!,
+                                            style: FlutterFlowTheme.of(context)
+                                                .title1
+                                                .override(
+                                                  fontFamily: 'Lexend Deca',
+                                                  color: Colors.white,
+                                                  fontSize: 24.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                           ),
                                         ),
+                                        Icon(
+                                          Icons.chevron_right_rounded,
+                                          color: Colors.white,
+                                          size: 24.0,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 4.0, 16.0, 0.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
                                         Expanded(
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 0.0, 4.0),
-                                                child: Text(
-                                                  'Lorem ipsum',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .title3
-                                                      .override(
-                                                        fontFamily:
-                                                            'Lexend Deca',
-                                                        color: Colors.white,
-                                                        fontSize: 20.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
+                                          child: Text(
+                                            listViewListingsRecord.description!,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2
+                                                .override(
+                                                  fontFamily: 'Lexend Deca',
+                                                  color: Color(0xFF39D2C0),
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.normal,
                                                 ),
-                                              ),
-                                            ],
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                ),
-                              ],
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 4.0, 16.0, 16.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          FFButtonWidget(
+                                            onPressed: () {
+                                              print(
+                                                  'Button-Reserve pressed ...');
+                                            },
+                                            text: 'Reserve',
+                                            icon: Icon(
+                                              Icons.add_rounded,
+                                              color: Colors.white,
+                                              size: 15.0,
+                                            ),
+                                            options: FFButtonOptions(
+                                              width: 120.0,
+                                              height: 40.0,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              color: Color(0xFF39D2C0),
+                                              textStyle: GoogleFonts.getFont(
+                                                'Lexend Deca',
+                                                color: Colors.white,
+                                                fontSize: 14.0,
+                                              ),
+                                              elevation: 3.0,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1.0,
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 0.0, 4.0),
+                                                  child: Text(
+                                                    listViewListingsRecord
+                                                        .price!
+                                                        .toString(),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .title3
+                                                        .override(
+                                                          fontFamily:
+                                                              'Lexend Deca',
+                                                          color: Colors.white,
+                                                          fontSize: 20.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

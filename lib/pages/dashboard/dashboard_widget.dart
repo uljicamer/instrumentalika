@@ -156,10 +156,15 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(5.0, 20.0, 0.0, 0.0),
-                      child: Icon(
-                        Icons.shopping_cart_outlined,
-                        color: Colors.black,
-                        size: 48.0,
+                      child: InkWell(
+                        onTap: () async {
+                          context.pushNamed('shoppingCart');
+                        },
+                        child: Icon(
+                          Icons.shopping_cart_outlined,
+                          color: Colors.black,
+                          size: 48.0,
+                        ),
                       ),
                     ),
                   ],

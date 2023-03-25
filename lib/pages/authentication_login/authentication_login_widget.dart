@@ -1,4 +1,5 @@
 import '/auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -29,6 +30,7 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
 
     _model.emailAddressController ??= TextEditingController();
     _model.passwordController ??= TextEditingController();
+    _model.usernameFieldController ??= TextEditingController();
     _model.emailAddressCreateController ??= TextEditingController();
     _model.passwordCreateController ??= TextEditingController();
   }
@@ -114,7 +116,6 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                       controller: _model.emailAddressController,
                                       obscureText: false,
                                       decoration: InputDecoration(
-                                        labelText: 'Email Address',
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .bodyText2,
                                         hintText: 'Enter your email...',
@@ -177,7 +178,6 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                       controller: _model.passwordController,
                                       obscureText: !_model.passwordVisibility,
                                       decoration: InputDecoration(
-                                        labelText: 'Password',
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .bodyText2,
                                         hintText: 'Enter your password...',
@@ -297,9 +297,24 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 20.0, 0.0, 0.0),
                                     child: FFButtonWidget(
-                                      onPressed: () {
-                                        print(
-                                            'Button-ForgotPassword pressed ...');
+                                      onPressed: () async {
+                                        if (_model.emailAddressController.text
+                                            .isEmpty) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Email required!',
+                                              ),
+                                            ),
+                                          );
+                                          return;
+                                        }
+                                        await resetPassword(
+                                          email: _model
+                                              .emailAddressController.text,
+                                          context: context,
+                                        );
                                       },
                                       text: 'Forgot Password?',
                                       options: FFButtonOptions(
@@ -347,13 +362,71 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
+                                        20.0, 0.0, 20.0, 0.0),
+                                    child: TextFormField(
+                                      controller:
+                                          _model.usernameFieldController,
+                                      autofocus: true,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        hintText: 'Enter your username...',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .bodyText2,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFFF0F0F0),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        filled: true,
+                                        fillColor: Color(0xFFF0F0F0),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Roboto Mono',
+                                            color: FlutterFlowTheme.of(context)
+                                                .textColor,
+                                          ),
+                                      validator: _model
+                                          .usernameFieldControllerValidator
+                                          .asValidator(context),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         20.0, 20.0, 20.0, 0.0),
                                     child: TextFormField(
                                       controller:
                                           _model.emailAddressCreateController,
                                       obscureText: false,
                                       decoration: InputDecoration(
-                                        labelText: 'Email Address',
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .bodyText2,
                                         hintText: 'Enter your email...',
@@ -418,7 +491,6 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                       obscureText:
                                           !_model.passwordCreateVisibility,
                                       decoration: InputDecoration(
-                                        labelText: 'Password',
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .bodyText2,
                                         hintText: 'Enter your password...',
@@ -501,13 +573,21 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                         final user =
                                             await createAccountWithEmail(
                                           context,
-                                          _model.emailAddressCreateController
-                                              .text,
+                                          _model.emailAddressController.text,
                                           _model.passwordCreateController.text,
                                         );
                                         if (user == null) {
                                           return;
                                         }
+
+                                        final usersCreateData =
+                                            createUsersRecordData(
+                                          username: _model
+                                              .usernameFieldController.text,
+                                        );
+                                        await UsersRecord.collection
+                                            .doc(user.uid)
+                                            .update(usersCreateData);
 
                                         context.pushNamedAuth(
                                             'onboarding_screen', mounted);

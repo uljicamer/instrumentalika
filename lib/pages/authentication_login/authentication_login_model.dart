@@ -1,4 +1,5 @@
 import '/auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -16,6 +17,9 @@ class AuthenticationLoginModel extends FlutterFlowModel {
   TextEditingController? passwordController;
   late bool passwordVisibility;
   String? Function(BuildContext, String?)? passwordControllerValidator;
+  // State field(s) for usernameField widget.
+  TextEditingController? usernameFieldController;
+  String? Function(BuildContext, String?)? usernameFieldControllerValidator;
   // State field(s) for emailAddress-Create widget.
   TextEditingController? emailAddressCreateController;
   String? Function(BuildContext, String?)?
@@ -35,6 +39,7 @@ class AuthenticationLoginModel extends FlutterFlowModel {
   void dispose() {
     emailAddressController?.dispose();
     passwordController?.dispose();
+    usernameFieldController?.dispose();
     emailAddressCreateController?.dispose();
     passwordCreateController?.dispose();
   }

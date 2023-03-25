@@ -97,7 +97,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/productPageBas',
           builder: (context, params) => NavBarPage(
             initialPage: '',
-            page: ProductPageBasWidget(),
+            page: ProductPageBasWidget(
+              kategorijaBas: params.getParam('kategorijaBas',
+                  ParamType.DocumentReference, false, ['listings']),
+            ),
           ),
         ),
         FFRoute(
@@ -130,7 +133,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/productPageGitara',
           builder: (context, params) => NavBarPage(
             initialPage: '',
-            page: ProductPageGitaraWidget(),
+            page: ProductPageGitaraWidget(
+              kategorijaGitara: params.getParam('kategorijaGitara',
+                  ParamType.DocumentReference, false, ['listings']),
+            ),
           ),
         ),
         FFRoute(
@@ -138,7 +144,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/productPageKlavijatura',
           builder: (context, params) => NavBarPage(
             initialPage: '',
-            page: ProductPageKlavijaturaWidget(),
+            page: ProductPageKlavijaturaWidget(
+              kategorijaKlavijatura: params.getParam('kategorijaKlavijatura',
+                  ParamType.DocumentReference, false, ['listings']),
+            ),
           ),
         ),
         FFRoute(
@@ -146,7 +155,23 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/productPageOstalo',
           builder: (context, params) => NavBarPage(
             initialPage: '',
-            page: ProductPageOstaloWidget(),
+            page: ProductPageOstaloWidget(
+              kategorijaOstalo: params.getParam('kategorijaOstalo',
+                  ParamType.DocumentReference, false, ['listings']),
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'shoppingCart',
+          path: '/shoppingCart',
+          builder: (context, params) => ShoppingCartWidget(),
+        ),
+        FFRoute(
+          name: 'productPage',
+          path: '/productPage',
+          builder: (context, params) => ProductPageWidget(
+            docRef: params.getParam(
+                'docRef', ParamType.DocumentReference, false, ['listings']),
           ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),

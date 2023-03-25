@@ -179,15 +179,8 @@ class _ProductPageKlavijaturaWidgetState
                 final Query<Object?> Function(Query<Object?>) queryBuilder =
                     (listingsRecord) => listingsRecord
                         .where('specifications',
-                            isEqualTo: valueOrDefault<String>(
-                                      widget.kategorijaKlavijatura?.id,
-                                      'Klavijatura',
-                                    ) !=
-                                    ''
-                                ? valueOrDefault<String>(
-                                    widget.kategorijaKlavijatura?.id,
-                                    'Klavijatura',
-                                  )
+                            isEqualTo: widget.kategorijaKlavijatura?.id != ''
+                                ? widget.kategorijaKlavijatura?.id
                                 : null)
                         .where('name',
                             isEqualTo: _model.searchFieldController.text != ''
@@ -212,15 +205,8 @@ class _ProductPageKlavijaturaWidgetState
                   queryListingsRecordPage(
                     queryBuilder: (listingsRecord) => listingsRecord
                         .where('specifications',
-                            isEqualTo: valueOrDefault<String>(
-                                      widget.kategorijaKlavijatura?.id,
-                                      'Klavijatura',
-                                    ) !=
-                                    ''
-                                ? valueOrDefault<String>(
-                                    widget.kategorijaKlavijatura?.id,
-                                    'Klavijatura',
-                                  )
+                            isEqualTo: widget.kategorijaKlavijatura?.id != ''
+                                ? widget.kategorijaKlavijatura?.id
                                 : null)
                         .where('name',
                             isEqualTo: _model.searchFieldController.text != ''

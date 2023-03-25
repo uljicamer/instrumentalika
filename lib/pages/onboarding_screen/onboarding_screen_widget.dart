@@ -46,13 +46,6 @@ class _OnboardingScreenWidgetState extends State<OnboardingScreenWidget> {
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         automaticallyImplyLeading: false,
-        title: Text(
-          'Dobro Došli',
-          textAlign: TextAlign.center,
-          style: FlutterFlowTheme.of(context).title1.override(
-                fontFamily: 'Roboto',
-              ),
-        ),
         actions: [],
         centerTitle: false,
         elevation: 0.0,
@@ -171,7 +164,7 @@ class _OnboardingScreenWidgetState extends State<OnboardingScreenWidget> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            'Kontraktirajte prodavača  ili sigurnim putem kupite direktn artikal, te postavljaj te svoje artikle ',
+                                            'Kontaktirajte prodavača ili sigurnim putem kupite direktno artikle, te postavljajte svoje artikle ',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText2
                                                 .override(

@@ -303,7 +303,7 @@ class _ProductPageOstaloWidgetState extends State<ProductPageOstaloWidget> {
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             image: Image.network(
-                              'https://images.pexels.com/photos/3428498/pexels-photo-3428498.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                              listViewListingsRecord.images!,
                             ).image,
                           ),
                           borderRadius: BorderRadius.circular(8.0),

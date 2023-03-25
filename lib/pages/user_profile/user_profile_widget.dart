@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -133,21 +134,15 @@ class _UserProfileWidgetState extends State<UserProfileWidget>
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AuthUserStreamWidget(
-                                builder: (context) => Text(
-                                  currentUserDisplayName,
-                                  style: FlutterFlowTheme.of(context).title3,
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 18.0),
+                                child: AuthUserStreamWidget(
+                                  builder: (context) => AutoSizeText(
+                                    currentUserDisplayName,
+                                    style: FlutterFlowTheme.of(context).title3,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                currentUserUid,
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Roboto Mono',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                    ),
                               ),
                             ],
                           ),

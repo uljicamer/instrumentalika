@@ -2,7 +2,9 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -85,9 +87,12 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                       child: Material(
                         color: Colors.transparent,
                         elevation: 0.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.845,
-                          height: 60.0,
+                          height: 53.5,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
@@ -98,65 +103,65 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                 offset: Offset(0.0, 2.0),
                               )
                             ],
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 0.0, 0.0, 0.0),
-                            child: TextFormField(
-                              controller: _model.searchFieldController,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                hintText: 'Pretraga',
-                                hintStyle:
-                                    FlutterFlowTheme.of(context).bodyText2,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                prefixIcon: Icon(
-                                  Icons.search_rounded,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  size: 24.0,
-                                ),
-                              ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
-                              maxLines: null,
-                              validator: _model.searchFieldControllerValidator
-                                  .asValidator(context),
+                          child: TextFormField(
+                            controller: _model.searchFieldController,
+                            onChanged: (_) => EasyDebounce.debounce(
+                              '_model.searchFieldController',
+                              Duration(milliseconds: 1),
+                              () => setState(() {}),
                             ),
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              hintText: 'Pretraga',
+                              hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              prefixIcon: Icon(
+                                Icons.search_rounded,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 24.0,
+                              ),
+                            ),
+                            style: FlutterFlowTheme.of(context).bodyText1,
+                            validator: _model.searchFieldControllerValidator
+                                .asValidator(context),
                           ),
                         ),
                       ),
                     ),
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(5.0, 20.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(9.0, 20.0, 0.0, 0.0),
                       child: InkWell(
                         onTap: () async {
                           context.pushNamed('cart_page');
@@ -164,7 +169,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                         child: Icon(
                           Icons.shopping_cart_outlined,
                           color: Colors.black,
-                          size: 48.0,
+                          size: 40.0,
                         ),
                       ),
                     ),
@@ -246,7 +251,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 8.0, 0.0, 0.0),
                                       child: Text(
-                                        'bas gitare',
+                                        'Bas Gitare',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText2,
                                       ),
@@ -292,7 +297,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       ),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            5.0, 8.0, 0.0, 0.0),
+                                            9.0, 8.0, 0.0, 0.0),
                                         child: FaIcon(
                                           FontAwesomeIcons.guitar,
                                           color: Colors.black,
@@ -304,7 +309,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 8.0, 0.0, 0.0),
                                       child: Text(
-                                        'gitare',
+                                        'Gitare',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText2,
                                       ),
@@ -362,7 +367,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 8.0, 0.0, 0.0),
                                       child: Text(
-                                        'klavijature',
+                                        'Klavijature',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText2
                                             .override(
@@ -422,7 +427,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 8.0, 0.0, 0.0),
                                       child: Text(
-                                        'ostalo',
+                                        'Ostalo',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText2
                                             .override(
@@ -467,11 +472,6 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                       _model.searchFieldController.text != ''
                                           ? _model.searchFieldController.text
                                           : null)
-                              .where('name',
-                                  isEqualTo:
-                                      _model.searchFieldController.text != ''
-                                          ? _model.searchFieldController.text
-                                          : null)
                               .orderBy('created_at', descending: true);
                       if (_model.pagingController != null) {
                         final query = queryBuilder(ListingsRecord.collection);
@@ -494,11 +494,6 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                           .addPageRequestListener((nextPageMarker) {
                         queryListingsRecordPage(
                           queryBuilder: (listingsRecord) => listingsRecord
-                              .where('name',
-                                  isEqualTo:
-                                      _model.searchFieldController.text != ''
-                                          ? _model.searchFieldController.text
-                                          : null)
                               .where('name',
                                   isEqualTo:
                                       _model.searchFieldController.text != ''
@@ -640,7 +635,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                                 );
                                               },
                                             ),
-                                            Text(
+                                            AutoSizeText(
                                               listViewListingsRecord.price!
                                                   .toString(),
                                               style: FlutterFlowTheme.of(

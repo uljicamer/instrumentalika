@@ -66,10 +66,10 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                     Align(
                       alignment: AlignmentDirectional(-0.05, 0.0),
                       child: Image.asset(
-                        'assets/images/Instrumentalika-logos_white.png',
+                        'assets/images/Instrumentalika-logos_white_-_Edited.png',
                         width: 350.0,
-                        height: 200.0,
-                        fit: BoxFit.cover,
+                        height: 250.0,
+                        fit: BoxFit.contain,
                       ),
                     ),
                   ],
@@ -95,10 +95,10 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                             FlutterFlowTheme.of(context).primaryBtnText2,
                         tabs: [
                           Tab(
-                            text: 'Sign In',
+                            text: 'Prijavi se',
                           ),
                           Tab(
-                            text: 'Sign Up',
+                            text: 'Registracija',
                           ),
                         ],
                       ),
@@ -119,8 +119,11 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelStyle: FlutterFlowTheme.of(context)
-                                            .bodyText2,
-                                        hintText: 'Enter your email...',
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                            ),
+                                        hintText: 'Unesite vas e-mail...',
                                         hintStyle: FlutterFlowTheme.of(context)
                                             .bodyText2,
                                         enabledBorder: OutlineInputBorder(
@@ -181,8 +184,11 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                       obscureText: !_model.passwordVisibility,
                                       decoration: InputDecoration(
                                         labelStyle: FlutterFlowTheme.of(context)
-                                            .bodyText2,
-                                        hintText: 'Enter your password...',
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                            ),
+                                        hintText: 'Unesite vasu lozinku...',
                                         hintStyle: FlutterFlowTheme.of(context)
                                             .bodyText2,
                                         enabledBorder: OutlineInputBorder(
@@ -269,7 +275,7 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                         context.goNamedAuth(
                                             'dashboard', mounted);
                                       },
-                                      text: 'Sign In',
+                                      text: 'Prijava',
                                       options: FFButtonOptions(
                                         width: 230.0,
                                         height: 50.0,
@@ -318,7 +324,7 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                           context: context,
                                         );
                                       },
-                                      text: 'Forgot Password?',
+                                      text: 'Zaboravljena lozinka?',
                                       options: FFButtonOptions(
                                         width: 170.0,
                                         height: 40.0,
@@ -412,7 +418,12 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                             .primaryBtnText2,
                                       ),
                                       style: FlutterFlowTheme.of(context)
-                                          .bodyText1,
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryBtnText,
+                                          ),
                                       validator: _model
                                           .usernameFieldControllerValidator
                                           .asValidator(context),
@@ -475,7 +486,7 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
-                                            fontFamily: 'Roboto Mono',
+                                            fontFamily: 'Roboto',
                                             color: Color(0xFF0F1113),
                                           ),
                                       maxLines: null,
@@ -560,7 +571,7 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
-                                            fontFamily: 'Roboto Mono',
+                                            fontFamily: 'Roboto',
                                             color: Color(0xFF0F1113),
                                           ),
                                       validator: _model
@@ -598,7 +609,7 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                         context.pushNamedAuth(
                                             'onboarding_screen', mounted);
                                       },
-                                      text: 'Create Account',
+                                      text: 'Kreiraj racun',
                                       options: FFButtonOptions(
                                         width: 230.0,
                                         height: 50.0,
@@ -611,7 +622,7 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                         textStyle: FlutterFlowTheme.of(context)
                                             .subtitle2
                                             .override(
-                                              fontFamily: 'Roboto Mono',
+                                              fontFamily: 'Roboto',
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryColor,

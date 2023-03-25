@@ -143,7 +143,7 @@ class _NavBarPageState extends State<NavBarPage> {
         selectedItemColor: FlutterFlowTheme.of(context).primaryBtnText,
         unselectedItemColor: FlutterFlowTheme.of(context).black600,
         selectedBackgroundColor: Color(0x00000000),
-        borderRadius: 8.0,
+        borderRadius: 1.0,
         itemBorderRadius: 8.0,
         margin: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
         padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),

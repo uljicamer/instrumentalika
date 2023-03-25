@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -229,11 +230,13 @@ class _CartPageWidgetState extends State<CartPageWidget> {
                                               CrossAxisAlignment.end,
                                           children: [
                                             FFButtonWidget(
-                                              onPressed: () {
-                                                print(
-                                                    'Button-Reserve pressed ...');
+                                              onPressed: () async {
+                                                await FirebaseStorage.instance
+                                                    .refFromURL(cartItemsIndex
+                                                        .toString())
+                                                    .delete();
                                               },
-                                              text: 'Reserve',
+                                              text: 'Ukloni',
                                               icon: Icon(
                                                 Icons.add_rounded,
                                                 color: Colors.white,
@@ -249,7 +252,7 @@ class _CartPageWidgetState extends State<CartPageWidget> {
                                                     EdgeInsetsDirectional
                                                         .fromSTEB(
                                                             0.0, 0.0, 0.0, 0.0),
-                                                color: Color(0xFF39D2C0),
+                                                color: Color(0xFFD81D21),
                                                 textStyle: GoogleFonts.getFont(
                                                   'Lexend Deca',
                                                   color: Colors.white,

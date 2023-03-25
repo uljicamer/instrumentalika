@@ -39,6 +39,8 @@ class _DashboardWidgetState extends State<DashboardWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -158,7 +160,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                           EdgeInsetsDirectional.fromSTEB(5.0, 20.0, 0.0, 0.0),
                       child: InkWell(
                         onTap: () async {
-                          context.pushNamed('shoppingCart');
+                          context.pushNamed('cart_page');
                         },
                         child: Icon(
                           Icons.shopping_cart_outlined,
@@ -590,11 +592,20 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                               MainAxisAlignment.center,
                                           children: [
                                             FFButtonWidget(
-                                              onPressed: () {
-                                                print(
-                                                    'Button-Reserve pressed ...');
+                                              onPressed: () async {
+                                                context.pushNamed(
+                                                  'productPage',
+                                                  queryParams: {
+                                                    'docRef': serializeParam(
+                                                      listViewListingsRecord
+                                                          .reference,
+                                                      ParamType
+                                                          .DocumentReference,
+                                                    ),
+                                                  }.withoutNulls,
+                                                );
                                               },
-                                              text: 'Dodaj',
+                                              text: 'Više',
                                               icon: Icon(
                                                 Icons.add_rounded,
                                                 color: Colors.white,

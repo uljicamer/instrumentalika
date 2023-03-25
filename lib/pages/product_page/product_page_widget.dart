@@ -45,6 +45,8 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
@@ -259,8 +261,10 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   FFButtonWidget(
-                    onPressed: () {
-                      print('Button pressed ...');
+                    onPressed: () async {
+                      setState(() {
+                        FFAppState().addToCart(widget.docRef!);
+                      });
                     },
                     text: 'Dodaj U Korpu',
                     options: FFButtonOptions(

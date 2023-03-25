@@ -162,17 +162,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'shoppingCart',
-          path: '/shoppingCart',
-          builder: (context, params) => ShoppingCartWidget(),
-        ),
-        FFRoute(
           name: 'productPage',
           path: '/productPage',
           builder: (context, params) => ProductPageWidget(
             docRef: params.getParam(
                 'docRef', ParamType.DocumentReference, false, ['listings']),
           ),
+        ),
+        FFRoute(
+          name: 'cart_page',
+          path: '/cartPage',
+          builder: (context, params) => CartPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,

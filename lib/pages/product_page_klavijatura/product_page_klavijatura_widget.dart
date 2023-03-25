@@ -46,6 +46,8 @@ class _ProductPageKlavijaturaWidgetState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Color(0xFFF1F4F8),
@@ -313,7 +315,7 @@ class _ProductPageKlavijaturaWidgetState
                                               print(
                                                   'Button-Reserve pressed ...');
                                             },
-                                            text: 'Reserve',
+                                            text: 'Više',
                                             icon: Icon(
                                               Icons.add_rounded,
                                               color: Colors.white,

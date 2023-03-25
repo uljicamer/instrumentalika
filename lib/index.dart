@@ -14,5 +14,5 @@ export '/pages/product_page_klavijatura/product_page_klavijatura_widget.dart'
     show ProductPageKlavijaturaWidget;
 export '/pages/product_page_ostalo/product_page_ostalo_widget.dart'
     show ProductPageOstaloWidget;
-export '/shopping_cart/shopping_cart_widget.dart' show ShoppingCartWidget;
-export '/product_page/product_page_widget.dart' show ProductPageWidget;
+export '/pages/product_page/product_page_widget.dart' show ProductPageWidget;
+export '/pages/cart_page/cart_page_widget.dart' show CartPageWidget;

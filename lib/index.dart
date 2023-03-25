@@ -16,3 +16,7 @@ export '/pages/product_page_ostalo/product_page_ostalo_widget.dart'
     show ProductPageOstaloWidget;
 export '/pages/product_page/product_page_widget.dart' show ProductPageWidget;
 export '/pages/cart_page/cart_page_widget.dart' show CartPageWidget;
+export '/pages/payment_screen/payment_screen_widget.dart'
+    show PaymentScreenWidget;
+export '/upload_article_form/upload_article_form_widget.dart'
+    show UploadArticleFormWidget;

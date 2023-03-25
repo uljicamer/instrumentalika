@@ -1,10 +1,8 @@
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/form_field_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -199,61 +197,6 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
               ],
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 12.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
-                      child: FlutterFlowDropDown<String>(
-                        controller: _model.dropDownController ??=
-                            FormFieldController<String>(null),
-                        options: ['Small', 'Medium', 'Large'],
-                        onChanged: (val) =>
-                            setState(() => _model.dropDownValue = val),
-                        width: double.infinity,
-                        height: 50.0,
-                        textStyle: FlutterFlowTheme.of(context).bodyText1,
-                        hintText: 'Select a Size',
-                        icon: Icon(
-                          Icons.arrow_drop_down_rounded,
-                          color: Color(0xFF95A1AC),
-                          size: 15.0,
-                        ),
-                        fillColor:
-                            FlutterFlowTheme.of(context).secondaryBackground,
-                        elevation: 2.0,
-                        borderColor:
-                            FlutterFlowTheme.of(context).primaryBackground,
-                        borderWidth: 2.0,
-                        borderRadius: 8.0,
-                        margin:
-                            EdgeInsetsDirectional.fromSTEB(24.0, 4.0, 8.0, 4.0),
-                        hidesUnderline: true,
-                        isSearchable: false,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
@@ -268,7 +211,7 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                     },
                     text: 'Dodaj U Korpu',
                     options: FFButtonOptions(
-                      width: 300.0,
+                      width: 182.3,
                       height: 54.0,
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
@@ -286,6 +229,35 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                       borderSide: BorderSide(
                         color: Colors.transparent,
                         width: 1.0,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 0.0, 0.0),
+                    child: FFButtonWidget(
+                      onPressed: () {
+                        print('Button pressed ...');
+                      },
+                      text: 'Poruka',
+                      options: FFButtonOptions(
+                        width: 180.9,
+                        height: 53.4,
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        textStyle:
+                            FlutterFlowTheme.of(context).subtitle2.override(
+                                  fontFamily: 'Roboto Mono',
+                                  color: Colors.white,
+                                ),
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
                   ),

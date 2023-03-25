@@ -371,12 +371,13 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                       autofocus: true,
                                       obscureText: false,
                                       decoration: InputDecoration(
-                                        hintText: 'Enter your username...',
+                                        hintText: 'Unesite korisnicko ime...',
                                         hintStyle: FlutterFlowTheme.of(context)
                                             .bodyText2,
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: Color(0xFFF0F0F0),
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryBtnText2,
                                             width: 1.0,
                                           ),
                                           borderRadius:
@@ -407,15 +408,11 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                               BorderRadius.circular(8.0),
                                         ),
                                         filled: true,
-                                        fillColor: Color(0xFFF0F0F0),
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .primaryBtnText2,
                                       ),
                                       style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Roboto Mono',
-                                            color: FlutterFlowTheme.of(context)
-                                                .textColor,
-                                          ),
+                                          .bodyText1,
                                       validator: _model
                                           .usernameFieldControllerValidator
                                           .asValidator(context),
@@ -423,7 +420,7 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        20.0, 20.0, 20.0, 0.0),
+                                        20.0, 12.0, 20.0, 0.0),
                                     child: TextFormField(
                                       controller:
                                           _model.emailAddressCreateController,
@@ -431,9 +428,12 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                       decoration: InputDecoration(
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .bodyText2,
-                                        hintText: 'Enter your email...',
+                                        hintText: 'Unesite vas e-mail...',
                                         hintStyle: FlutterFlowTheme.of(context)
-                                            .bodyText2,
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                            ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                             color: Colors.white,
@@ -495,9 +495,12 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                       decoration: InputDecoration(
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .bodyText2,
-                                        hintText: 'Enter your password...',
+                                        hintText: 'Unesite vasu lozinku...',
                                         hintStyle: FlutterFlowTheme.of(context)
-                                            .bodyText2,
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                            ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                             color: Colors.white,
@@ -575,7 +578,8 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                         final user =
                                             await createAccountWithEmail(
                                           context,
-                                          _model.emailAddressController.text,
+                                          _model.emailAddressCreateController
+                                              .text,
                                           _model.passwordCreateController.text,
                                         );
                                         if (user == null) {
@@ -584,7 +588,7 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
 
                                         final usersCreateData =
                                             createUsersRecordData(
-                                          username: _model
+                                          displayName: _model
                                               .usernameFieldController.text,
                                         );
                                         await UsersRecord.collection

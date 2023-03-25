@@ -77,8 +77,8 @@ class _CartPageWidgetState extends State<CartPageWidget> {
             children: [
               Expanded(
                 child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
+                  onPressed: () async {
+                    context.pushNamed('payment_screen');
                   },
                   text: 'Plati',
                   options: FFButtonOptions(
@@ -123,7 +123,7 @@ class _CartPageWidgetState extends State<CartPageWidget> {
                           image: DecorationImage(
                             fit: BoxFit.fitWidth,
                             image: Image.network(
-                              'https://images.unsplash.com/photo-1616803689943-5601631c7fec?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTR8fHdvcmtvdXR8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60',
+                              '',
                             ).image,
                           ),
                           boxShadow: [

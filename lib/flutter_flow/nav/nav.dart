@@ -89,7 +89,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/dashboard',
           builder: (context, params) => NavBarPage(
             initialPage: '',
-            page: DashboardWidget(),
+            page: DashboardWidget(
+              docRef2: params.getParam(
+                  'docRef2', ParamType.DocumentReference, false, ['listings']),
+            ),
           ),
         ),
         FFRoute(
@@ -173,6 +176,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'cart_page',
           path: '/cartPage',
           builder: (context, params) => CartPageWidget(),
+        ),
+        FFRoute(
+          name: 'payment_screen',
+          path: '/paymentScreen',
+          builder: (context, params) => PaymentScreenWidget(),
+        ),
+        FFRoute(
+          name: 'uploadArticleForm',
+          path: '/uploadArticleForm',
+          builder: (context, params) => NavBarPage(
+            initialPage: '',
+            page: UploadArticleFormWidget(),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,

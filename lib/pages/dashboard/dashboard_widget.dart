@@ -2,16 +2,22 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:easy_debounce/easy_debounce.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'dashboard_model.dart';
 export 'dashboard_model.dart';
 
 class DashboardWidget extends StatefulWidget {
-  const DashboardWidget({Key? key}) : super(key: key);
+  const DashboardWidget({
+    Key? key,
+    this.docRef2,
+  }) : super(key: key);
+
+  final DocumentReference? docRef2;
 
   @override
   _DashboardWidgetState createState() => _DashboardWidgetState();
@@ -98,13 +104,6 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                 20.0, 0.0, 0.0, 0.0),
                             child: TextFormField(
                               controller: _model.searchFieldController,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                '_model.searchFieldController',
-                                Duration(milliseconds: 2000),
-                                () async {
-                                  context.pushNamed('dashboard');
-                                },
-                              ),
                               obscureText: false,
                               decoration: InputDecoration(
                                 hintText: 'Pretraga',
@@ -458,194 +457,259 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 50.0),
-                  child: StreamBuilder<List<ListingsRecord>>(
-                    stream: queryListingsRecord(),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 50.0,
-                            height: 50.0,
-                            child: CircularProgressIndicator(
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                            ),
-                          ),
-                        );
+                  child:
+                      PagedListView<DocumentSnapshot<Object?>?, ListingsRecord>(
+                    pagingController: () {
+                      final Query<Object?> Function(Query<Object?>)
+                          queryBuilder = (listingsRecord) => listingsRecord
+                              .where('name',
+                                  isEqualTo:
+                                      _model.searchFieldController.text != ''
+                                          ? _model.searchFieldController.text
+                                          : null)
+                              .where('name',
+                                  isEqualTo:
+                                      _model.searchFieldController.text != ''
+                                          ? _model.searchFieldController.text
+                                          : null);
+                      if (_model.pagingController != null) {
+                        final query = queryBuilder(ListingsRecord.collection);
+                        if (query != _model.pagingQuery) {
+                          // The query has changed
+                          _model.pagingQuery = query;
+                          _model.streamSubscriptions
+                              .forEach((s) => s?.cancel());
+                          _model.streamSubscriptions.clear();
+                          _model.pagingController!.refresh();
+                        }
+                        return _model.pagingController!;
                       }
-                      List<ListingsRecord> listViewListingsRecordList =
-                          snapshot.data!;
-                      return ListView.builder(
-                        padding: EdgeInsets.zero,
-                        primary: false,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: listViewListingsRecordList.length,
-                        itemBuilder: (context, listViewIndex) {
-                          final listViewListingsRecord =
-                              listViewListingsRecordList[listViewIndex];
-                          return Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 8.0, 16.0, 0.0),
-                            child: Container(
-                              width: double.infinity,
-                              height: 200.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                image: DecorationImage(
-                                  fit: BoxFit.fitWidth,
-                                  image: Image.network(
-                                    '',
-                                  ).image,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 3.0,
-                                    color: Color(0x33000000),
-                                    offset: Offset(0.0, 2.0),
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(8.0),
+
+                      _model.pagingController =
+                          PagingController(firstPageKey: null);
+                      _model.pagingQuery =
+                          queryBuilder(ListingsRecord.collection);
+                      _model.pagingController!
+                          .addPageRequestListener((nextPageMarker) {
+                        queryListingsRecordPage(
+                          queryBuilder: (listingsRecord) => listingsRecord
+                              .where('name',
+                                  isEqualTo:
+                                      _model.searchFieldController.text != ''
+                                          ? _model.searchFieldController.text
+                                          : null)
+                              .where('name',
+                                  isEqualTo:
+                                      _model.searchFieldController.text != ''
+                                          ? _model.searchFieldController.text
+                                          : null),
+                          nextPageMarker: nextPageMarker,
+                          pageSize: 25,
+                          isStream: true,
+                        ).then((page) {
+                          _model.pagingController!.appendPage(
+                            page.data,
+                            page.nextPageMarker,
+                          );
+                          final streamSubscription =
+                              page.dataStream?.listen((data) {
+                            data.forEach((item) {
+                              final itemIndexes = _model
+                                  .pagingController!.itemList!
+                                  .asMap()
+                                  .map((k, v) => MapEntry(v.reference.id, k));
+                              final index = itemIndexes[item.reference.id];
+                              final items = _model.pagingController!.itemList!;
+                              if (index != null) {
+                                items.replaceRange(index, index + 1, [item]);
+                                _model.pagingController!.itemList = {
+                                  for (var item in items) item.reference: item
+                                }.values.toList();
+                              }
+                            });
+                            setState(() {});
+                          });
+                          _model.streamSubscriptions.add(streamSubscription);
+                        });
+                      });
+                      return _model.pagingController!;
+                    }(),
+                    padding: EdgeInsets.zero,
+                    primary: false,
+                    shrinkWrap: true,
+                    reverse: false,
+                    scrollDirection: Axis.vertical,
+                    builderDelegate: PagedChildBuilderDelegate<ListingsRecord>(
+                      // Customize what your widget looks like when it's loading the first page.
+                      firstPageProgressIndicatorBuilder: (_) => Center(
+                        child: SizedBox(
+                          width: 50.0,
+                          height: 50.0,
+                          child: CircularProgressIndicator(
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                          ),
+                        ),
+                      ),
+
+                      itemBuilder: (context, _, listViewIndex) {
+                        final listViewListingsRecord =
+                            _model.pagingController!.itemList![listViewIndex];
+                        return Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 8.0, 16.0, 0.0),
+                          child: Container(
+                            width: double.infinity,
+                            height: 200.0,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              image: DecorationImage(
+                                fit: BoxFit.fitWidth,
+                                image: Image.network(
+                                  listViewListingsRecord.images!,
+                                ).image,
                               ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 120.0, 0.0, 0.0),
-                                child: Container(
-                                  width: 100.0,
-                                  height: 100.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(8.0),
-                                      bottomRight: Radius.circular(8.0),
-                                      topLeft: Radius.circular(0.0),
-                                      topRight: Radius.circular(0.0),
-                                    ),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 3.0,
+                                  color: Color(0x33000000),
+                                  offset: Offset(0.0, 2.0),
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 120.0, 0.0, 0.0),
+                              child: Container(
+                                width: 100.0,
+                                height: 100.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(8.0),
+                                    bottomRight: Radius.circular(8.0),
+                                    topLeft: Radius.circular(0.0),
+                                    topRight: Radius.circular(0.0),
                                   ),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 16.0, 0.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              StreamBuilder<
-                                                  List<ListingsRecord>>(
-                                                stream: queryListingsRecord(),
-                                                builder: (context, snapshot) {
-                                                  // Customize what your widget looks like when it's loading.
-                                                  if (!snapshot.hasData) {
-                                                    return Center(
-                                                      child: SizedBox(
-                                                        width: 50.0,
-                                                        height: 50.0,
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryColor,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  }
-                                                  List<ListingsRecord>
-                                                      textListingsRecordList =
-                                                      snapshot.data!;
-                                                  return Text(
-                                                    listViewListingsRecord
-                                                        .name!,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .title2,
-                                                  );
-                                                },
-                                              ),
-                                              Text(
-                                                listViewListingsRecord.price!
-                                                    .toString(),
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyText1
-                                                    .override(
-                                                      fontFamily: 'Lexend Deca',
-                                                      color: Color(0xFF39D2C0),
-                                                      fontSize: 14.0,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Column(
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            FFButtonWidget(
-                                              onPressed: () async {
-                                                context.pushNamed(
-                                                  'productPage',
-                                                  queryParams: {
-                                                    'docRef': serializeParam(
-                                                      listViewListingsRecord
-                                                          .reference,
-                                                      ParamType
-                                                          .DocumentReference,
+                                            StreamBuilder<List<ListingsRecord>>(
+                                              stream: queryListingsRecord(),
+                                              builder: (context, snapshot) {
+                                                // Customize what your widget looks like when it's loading.
+                                                if (!snapshot.hasData) {
+                                                  return Center(
+                                                    child: SizedBox(
+                                                      width: 50.0,
+                                                      height: 50.0,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                      ),
                                                     ),
-                                                  }.withoutNulls,
+                                                  );
+                                                }
+                                                List<ListingsRecord>
+                                                    textListingsRecordList =
+                                                    snapshot.data!;
+                                                return Text(
+                                                  listViewListingsRecord.name!,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .title2,
                                                 );
                                               },
-                                              text: 'Više',
-                                              icon: Icon(
-                                                Icons.add_rounded,
-                                                color: Colors.white,
-                                                size: 15.0,
-                                              ),
-                                              options: FFButtonOptions(
-                                                width: 120.0,
-                                                height: 40.0,
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 0.0, 0.0),
-                                                iconPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                            0.0, 0.0, 0.0, 0.0),
-                                                color: Color(0xFF39D2C0),
-                                                textStyle: GoogleFonts.getFont(
-                                                  'Lexend Deca',
-                                                  color: Colors.white,
-                                                  fontSize: 14.0,
-                                                ),
-                                                elevation: 3.0,
-                                                borderSide: BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 1.0,
-                                                ),
-                                              ),
+                                            ),
+                                            Text(
+                                              listViewListingsRecord.price!
+                                                  .toString(),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyText1
+                                                  .override(
+                                                    fontFamily: 'Lexend Deca',
+                                                    color: Color(0xFF39D2C0),
+                                                    fontSize: 14.0,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
                                             ),
                                           ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          FFButtonWidget(
+                                            onPressed: () async {
+                                              context.pushNamed(
+                                                'productPage',
+                                                queryParams: {
+                                                  'docRef': serializeParam(
+                                                    listViewListingsRecord
+                                                        .reference,
+                                                    ParamType.DocumentReference,
+                                                  ),
+                                                }.withoutNulls,
+                                              );
+                                            },
+                                            text: 'Više',
+                                            icon: Icon(
+                                              Icons.add_rounded,
+                                              color: Colors.white,
+                                              size: 15.0,
+                                            ),
+                                            options: FFButtonOptions(
+                                              width: 120.0,
+                                              height: 40.0,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              color: Color(0xFF39D2C0),
+                                              textStyle: GoogleFonts.getFont(
+                                                'Lexend Deca',
+                                                color: Colors.white,
+                                                fontSize: 14.0,
+                                              ),
+                                              elevation: 3.0,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
                             ),
-                          );
-                        },
-                      );
-                    },
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ],

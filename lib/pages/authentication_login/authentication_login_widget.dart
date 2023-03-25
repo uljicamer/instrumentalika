@@ -379,7 +379,13 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                       decoration: InputDecoration(
                                         hintText: 'Unesite korisnicko ime...',
                                         hintStyle: FlutterFlowTheme.of(context)
-                                            .bodyText2,
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .gray600,
+                                            ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                             color: FlutterFlowTheme.of(context)
@@ -416,13 +422,16 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                         filled: true,
                                         fillColor: FlutterFlowTheme.of(context)
                                             .primaryBtnText2,
+                                        contentPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                20.0, 0.0, 0.0, 0.0),
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
                                             fontFamily: 'Roboto',
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryBtnText,
+                                                .black600,
                                           ),
                                       validator: _model
                                           .usernameFieldControllerValidator
@@ -435,6 +444,7 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                     child: TextFormField(
                                       controller:
                                           _model.emailAddressCreateController,
+                                      autofocus: true,
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelStyle: FlutterFlowTheme.of(context)
@@ -487,9 +497,9 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                           .bodyText1
                                           .override(
                                             fontFamily: 'Roboto',
-                                            color: Color(0xFF0F1113),
+                                            color: FlutterFlowTheme.of(context)
+                                                .black600,
                                           ),
-                                      maxLines: null,
                                       validator: _model
                                           .emailAddressCreateControllerValidator
                                           .asValidator(context),
@@ -501,6 +511,7 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                     child: TextFormField(
                                       controller:
                                           _model.passwordCreateController,
+                                      autofocus: true,
                                       obscureText:
                                           !_model.passwordCreateVisibility,
                                       decoration: InputDecoration(
@@ -572,7 +583,8 @@ class _AuthenticationLoginWidgetState extends State<AuthenticationLoginWidget> {
                                           .bodyText1
                                           .override(
                                             fontFamily: 'Roboto',
-                                            color: Color(0xFF0F1113),
+                                            color: FlutterFlowTheme.of(context)
+                                                .black600,
                                           ),
                                       validator: _model
                                           .passwordCreateControllerValidator

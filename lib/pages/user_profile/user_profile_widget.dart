@@ -268,7 +268,7 @@ class _UserProfileWidgetState extends State<UserProfileWidget>
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
+                                          AutoSizeText(
                                             listViewListingsRecord.name!,
                                             style: FlutterFlowTheme.of(context)
                                                 .subtitle1,
@@ -278,7 +278,7 @@ class _UserProfileWidgetState extends State<UserProfileWidget>
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          30.0, 0.0, 0.0, 0.0),
+                                          10.0, 0.0, 0.0, 0.0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
                                           context.pushNamed(
@@ -292,9 +292,9 @@ class _UserProfileWidgetState extends State<UserProfileWidget>
                                             }.withoutNulls,
                                           );
                                         },
-                                        text: 'Button',
+                                        text: 'Otvori',
                                         options: FFButtonOptions(
-                                          width: 130.0,
+                                          width: 80.0,
                                           height: 40.0,
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -304,6 +304,41 @@ class _UserProfileWidgetState extends State<UserProfileWidget>
                                                   0.0, 0.0, 0.0, 0.0),
                                           color: FlutterFlowTheme.of(context)
                                               .primaryColor,
+                                          textStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .subtitle2
+                                                  .override(
+                                                    fontFamily: 'Roboto Mono',
+                                                    color: Colors.white,
+                                                  ),
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          10.0, 0.0, 0.0, 0.0),
+                                      child: FFButtonWidget(
+                                        onPressed: () async {
+                                          await listViewListingsRecord.reference
+                                              .delete();
+                                        },
+                                        text: 'X',
+                                        options: FFButtonOptions(
+                                          width: 35.0,
+                                          height: 40.0,
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          iconPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          color: Color(0xFFCF0000),
                                           textStyle:
                                               FlutterFlowTheme.of(context)
                                                   .subtitle2

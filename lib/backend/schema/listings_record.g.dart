@@ -97,6 +97,13 @@ class _$ListingsRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.isFavorite;
+    if (value != null) {
+      result
+        ..add('isFavorite')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -164,6 +171,10 @@ class _$ListingsRecordSerializer
           result.createdByID = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'isFavorite':
+          result.isFavorite = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -201,6 +212,8 @@ class _$ListingsRecord extends ListingsRecord {
   @override
   final String? createdByID;
   @override
+  final bool? isFavorite;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ListingsRecord([void Function(ListingsRecordBuilder)? updates]) =>
@@ -218,6 +231,7 @@ class _$ListingsRecord extends ListingsRecord {
       this.quantity,
       this.images,
       this.createdByID,
+      this.isFavorite,
       this.ffRef})
       : super._();
 
@@ -244,6 +258,7 @@ class _$ListingsRecord extends ListingsRecord {
         quantity == other.quantity &&
         images == other.images &&
         createdByID == other.createdByID &&
+        isFavorite == other.isFavorite &&
         ffRef == other.ffRef;
   }
 
@@ -261,6 +276,7 @@ class _$ListingsRecord extends ListingsRecord {
     _$hash = $jc(_$hash, quantity.hashCode);
     _$hash = $jc(_$hash, images.hashCode);
     _$hash = $jc(_$hash, createdByID.hashCode);
+    _$hash = $jc(_$hash, isFavorite.hashCode);
     _$hash = $jc(_$hash, ffRef.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -280,6 +296,7 @@ class _$ListingsRecord extends ListingsRecord {
           ..add('quantity', quantity)
           ..add('images', images)
           ..add('createdByID', createdByID)
+          ..add('isFavorite', isFavorite)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -334,6 +351,10 @@ class ListingsRecordBuilder
   String? get createdByID => _$this._createdByID;
   set createdByID(String? createdByID) => _$this._createdByID = createdByID;
 
+  bool? _isFavorite;
+  bool? get isFavorite => _$this._isFavorite;
+  set isFavorite(bool? isFavorite) => _$this._isFavorite = isFavorite;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -356,6 +377,7 @@ class ListingsRecordBuilder
       _quantity = $v.quantity;
       _images = $v.images;
       _createdByID = $v.createdByID;
+      _isFavorite = $v.isFavorite;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -390,6 +412,7 @@ class ListingsRecordBuilder
             quantity: quantity,
             images: images,
             createdByID: createdByID,
+            isFavorite: isFavorite,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

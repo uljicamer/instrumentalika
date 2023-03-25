@@ -34,9 +34,9 @@ class _UploadArticleFormWidgetState extends State<UploadArticleFormWidget> {
     super.initState();
     _model = createModel(context, () => UploadArticleFormModel());
 
-    _model.nazivArtiklaUploadController ??= TextEditingController();
-    _model.opisArtiklaUploadController ??= TextEditingController();
-    _model.cijenaArtiklaUploadController ??= TextEditingController();
+    _model.textController1 ??= TextEditingController();
+    _model.textController2 ??= TextEditingController();
+    _model.textController3 ??= TextEditingController();
   }
 
   @override
@@ -108,48 +108,6 @@ class _UploadArticleFormWidgetState extends State<UploadArticleFormWidget> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        FFButtonWidget(
-                          onPressed: () async {
-                            final listingsCreateData = {
-                              ...createListingsRecordData(
-                                name: _model.nazivArtiklaUploadController.text,
-                                description:
-                                    _model.opisArtiklaUploadController.text,
-                                price: double.tryParse(
-                                    _model.cijenaArtiklaUploadController.text),
-                                images: _model.uploadedFileUrl,
-                                createdByID: currentUserUid,
-                                specifications: _model.dropDownValue,
-                              ),
-                              'created_at': FieldValue.serverTimestamp(),
-                            };
-                            await ListingsRecord.collection
-                                .doc()
-                                .set(listingsCreateData);
-
-                            context.pushNamed('dashboard');
-                          },
-                          text: 'Objavi',
-                          options: FFButtonOptions(
-                            width: 130.0,
-                            height: 40.0,
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            textStyle:
-                                FlutterFlowTheme.of(context).subtitle2.override(
-                                      fontFamily: 'Roboto Mono',
-                                      color: Colors.white,
-                                    ),
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
                         Expanded(
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
@@ -160,12 +118,6 @@ class _UploadArticleFormWidgetState extends State<UploadArticleFormWidget> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Divider(
-                                    thickness: 3.0,
-                                    indent: 150.0,
-                                    endIndent: 150.0,
-                                    color: Color(0xFFF1F4F8),
-                                  ),
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment:
@@ -299,7 +251,7 @@ class _UploadArticleFormWidgetState extends State<UploadArticleFormWidget> {
                                               }
                                             }
                                           },
-                                          text: 'Upload Image',
+                                          text: 'Objavi sliku',
                                           options: FFButtonOptions(
                                             width: 150.0,
                                             height: 50.0,
@@ -349,194 +301,259 @@ class _UploadArticleFormWidgetState extends State<UploadArticleFormWidget> {
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    TextFormField(
-                      controller: _model.nazivArtiklaUploadController,
-                      autofocus: true,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        hintText: 'Naziv artikla',
-                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1.0,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1.0,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        errorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1.0,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1.0,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                      validator: _model.nazivArtiklaUploadControllerValidator
-                          .asValidator(context),
-                    ),
-                    TextFormField(
-                      controller: _model.opisArtiklaUploadController,
-                      autofocus: true,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        hintText: 'Kratak opis artikla',
-                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1.0,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                20.0, 0.0, 20.0, 0.0),
+                            child: TextFormField(
+                              controller: _model.textController1,
+                              autofocus: true,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                hintText: 'Naziv artikla...',
+                                hintStyle:
+                                    FlutterFlowTheme.of(context).bodyText2,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                filled: true,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).lineColor2,
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Roboto',
+                                  ),
+                              validator: _model.textController1Validator
+                                  .asValidator(context),
+                            ),
                           ),
                         ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1.0,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        errorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1.0,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1.0,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                      validator: _model.opisArtiklaUploadControllerValidator
-                          .asValidator(context),
-                    ),
-                    TextFormField(
-                      controller: _model.cijenaArtiklaUploadController,
-                      autofocus: true,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        hintText: 'Cijena artikla',
-                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1.0,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1.0,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        errorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1.0,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1.0,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                      validator: _model.cijenaArtiklaUploadControllerValidator
-                          .asValidator(context),
-                    ),
-                    FlutterFlowDropDown<String>(
-                      controller: _model.dropDownController ??=
-                          FormFieldController<String>(null),
-                      options: [
-                        'Bas gitara',
-                        'Gitara',
-                        'Klavijature',
-                        'Ostalo'
                       ],
-                      onChanged: (val) =>
-                          setState(() => _model.dropDownValue = val),
-                      width: 180.0,
-                      height: 50.0,
-                      searchHintTextStyle: FlutterFlowTheme.of(context)
-                          .bodyText1
-                          .override(
-                            fontFamily: 'Roboto Mono',
-                            color: FlutterFlowTheme.of(context).secondaryText,
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                20.0, 5.0, 0.0, 0.0),
+                            child: TextFormField(
+                              controller: _model.textController2,
+                              autofocus: true,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                hintText: 'Cijena artikla...',
+                                hintStyle:
+                                    FlutterFlowTheme.of(context).bodyText2,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                filled: true,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).lineColor2,
+                              ),
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                              validator: _model.textController2Validator
+                                  .asValidator(context),
+                            ),
                           ),
-                      textStyle: FlutterFlowTheme.of(context).bodyText1,
-                      hintText: 'Odaberite kategoriju',
-                      searchHintText: 'Search for an item...',
-                      fillColor:
-                          FlutterFlowTheme.of(context).secondaryBackground,
-                      elevation: 2.0,
-                      borderColor: Colors.transparent,
-                      borderWidth: 0.0,
-                      borderRadius: 0.0,
-                      margin:
-                          EdgeInsetsDirectional.fromSTEB(12.0, 4.0, 12.0, 4.0),
-                      hidesUnderline: true,
-                      isSearchable: false,
+                        ),
+                        FlutterFlowDropDown<String>(
+                          controller: _model.dropDownController ??=
+                              FormFieldController<String>(null),
+                          options: [
+                            'Bas gitara',
+                            'Gitara',
+                            'Klavijature',
+                            'Ostalo'
+                          ],
+                          onChanged: (val) =>
+                              setState(() => _model.dropDownValue = val),
+                          width: 180.0,
+                          height: 50.0,
+                          searchHintTextStyle: FlutterFlowTheme.of(context)
+                              .bodyText1
+                              .override(
+                                fontFamily: 'Roboto Mono',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                              ),
+                          textStyle: FlutterFlowTheme.of(context).bodyText1,
+                          hintText: 'Odaberite kategoriju',
+                          searchHintText: 'Search for an item...',
+                          fillColor:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          elevation: 2.0,
+                          borderColor: Colors.transparent,
+                          borderWidth: 0.0,
+                          borderRadius: 0.0,
+                          margin: EdgeInsetsDirectional.fromSTEB(
+                              12.0, 4.0, 12.0, 4.0),
+                          hidesUnderline: true,
+                          isSearchable: false,
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(20.0, 5.0, 20.0, 0.0),
+                      child: TextFormField(
+                        controller: _model.textController3,
+                        autofocus: true,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          hintText: 'Opis artikla...',
+                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          errorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          focusedErrorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          filled: true,
+                          fillColor: FlutterFlowTheme.of(context).lineColor2,
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                        validator: _model.textController3Validator
+                            .asValidator(context),
+                      ),
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 80.0, 0.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              FFButtonWidget(
+                                onPressed: () async {
+                                  final listingsCreateData = {
+                                    ...createListingsRecordData(
+                                      description: _model.textController3.text,
+                                      price: double.tryParse(
+                                          _model.textController2.text),
+                                      images: _model.uploadedFileUrl,
+                                      createdByID: currentUserUid,
+                                      specifications: _model.dropDownValue,
+                                      name: _model.textController1.text,
+                                    ),
+                                    'created_at': FieldValue.serverTimestamp(),
+                                  };
+                                  await ListingsRecord.collection
+                                      .doc()
+                                      .set(listingsCreateData);
+
+                                  context.pushNamed('dashboard');
+                                },
+                                text: 'Objavi',
+                                options: FFButtonOptions(
+                                  width: 130.0,
+                                  height: 40.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color:
+                                      FlutterFlowTheme.of(context).tertiary400,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Roboto Mono',
+                                        color: Colors.white,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

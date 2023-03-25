@@ -83,7 +83,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                   children: [
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 0.0, 0.0),
                       child: Material(
                         color: Colors.transparent,
                         elevation: 0.0,
@@ -627,11 +627,15 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                                 List<ListingsRecord>
                                                     textListingsRecordList =
                                                     snapshot.data!;
-                                                return Text(
+                                                return AutoSizeText(
                                                   listViewListingsRecord.name!,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .title2,
+                                                      .title2
+                                                      .override(
+                                                        fontFamily: 'Outfit',
+                                                        fontSize: 22.0,
+                                                      ),
                                                 );
                                               },
                                             ),

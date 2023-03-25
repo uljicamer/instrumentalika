@@ -1,3 +1,4 @@
+import '/auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -236,10 +237,13 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                     padding:
                         EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 0.0, 0.0),
                     child: FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
+                      onPressed: () async {
+                        final listingsUpdateData = createListingsRecordData(
+                          isFavorite: false == false,
+                        );
+                        await widget.docRef!.update(listingsUpdateData);
                       },
-                      text: 'Poruka',
+                      text: 'Spasi aritkal',
                       options: FFButtonOptions(
                         width: 180.9,
                         height: 53.4,
@@ -270,7 +274,7 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    'Product Description',
+                    'Opis proizvoda',
                     style: FlutterFlowTheme.of(context).bodyText1,
                   ),
                 ],
@@ -283,7 +287,7 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                 children: [
                   Expanded(
                     child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt utLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam labore et dolore magna aliqua. Ut enim ad minim veniam',
+                      '\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \n',
                       style: FlutterFlowTheme.of(context).bodyText2,
                     ),
                   ),

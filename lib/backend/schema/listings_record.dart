@@ -38,6 +38,8 @@ abstract class ListingsRecord
 
   String? get createdByID;
 
+  bool? get isFavorite;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -51,7 +53,8 @@ abstract class ListingsRecord
     ..salePrice = 0.0
     ..quantity = 0
     ..images = ''
-    ..createdByID = '';
+    ..createdByID = ''
+    ..isFavorite = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('listings');
@@ -86,6 +89,7 @@ Map<String, dynamic> createListingsRecordData({
   int? quantity,
   String? images,
   String? createdByID,
+  bool? isFavorite,
 }) {
   final firestoreData = serializers.toFirestore(
     ListingsRecord.serializer,
@@ -101,7 +105,8 @@ Map<String, dynamic> createListingsRecordData({
         ..salePrice = salePrice
         ..quantity = quantity
         ..images = images
-        ..createdByID = createdByID,
+        ..createdByID = createdByID
+        ..isFavorite = isFavorite,
     ),
   );
 

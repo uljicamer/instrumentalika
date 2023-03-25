@@ -13,9 +13,9 @@ import 'package:provider/provider.dart';
 class ProductPageKlavijaturaModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
-  // State field(s) for searchField widget.
-  TextEditingController? searchFieldController;
-  String? Function(BuildContext, String?)? searchFieldControllerValidator;
+  // State field(s) for searchFieldKlavir widget.
+  TextEditingController? searchFieldKlavirController;
+  String? Function(BuildContext, String?)? searchFieldKlavirControllerValidator;
   // State field(s) for ListView widget.
   PagingController<DocumentSnapshot?, ListingsRecord>? pagingController;
   Query? pagingQuery;
@@ -26,7 +26,7 @@ class ProductPageKlavijaturaModel extends FlutterFlowModel {
   void initState(BuildContext context) {}
 
   void dispose() {
-    searchFieldController?.dispose();
+    searchFieldKlavirController?.dispose();
     streamSubscriptions.forEach((s) => s?.cancel());
   }
 

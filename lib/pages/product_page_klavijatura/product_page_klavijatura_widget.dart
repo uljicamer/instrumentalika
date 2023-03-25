@@ -36,7 +36,7 @@ class _ProductPageKlavijaturaWidgetState
     super.initState();
     _model = createModel(context, () => ProductPageKlavijaturaModel());
 
-    _model.searchFieldController ??= TextEditingController();
+    _model.searchFieldKlavirController ??= TextEditingController();
   }
 
   @override
@@ -109,9 +109,9 @@ class _ProductPageKlavijaturaWidgetState
                     padding:
                         EdgeInsetsDirectional.fromSTEB(20.0, 4.0, 20.0, 0.0),
                     child: TextFormField(
-                      controller: _model.searchFieldController,
+                      controller: _model.searchFieldKlavirController,
                       onChanged: (_) => EasyDebounce.debounce(
-                        '_model.searchFieldController',
+                        '_model.searchFieldKlavirController',
                         Duration(milliseconds: 1),
                         () => setState(() {}),
                       ),
@@ -165,7 +165,7 @@ class _ProductPageKlavijaturaWidgetState
                             fontWeight: FontWeight.normal,
                           ),
                       maxLines: null,
-                      validator: _model.searchFieldControllerValidator
+                      validator: _model.searchFieldKlavirControllerValidator
                           .asValidator(context),
                     ),
                   ),
@@ -183,9 +183,10 @@ class _ProductPageKlavijaturaWidgetState
                                 ? widget.kategorijaKlavijatura?.id
                                 : null)
                         .where('name',
-                            isEqualTo: _model.searchFieldController.text != ''
-                                ? _model.searchFieldController.text
-                                : null);
+                            isEqualTo:
+                                _model.searchFieldKlavirController.text != ''
+                                    ? _model.searchFieldKlavirController.text
+                                    : null);
                 if (_model.pagingController != null) {
                   final query = queryBuilder(ListingsRecord.collection);
                   if (query != _model.pagingQuery) {
@@ -209,9 +210,10 @@ class _ProductPageKlavijaturaWidgetState
                                 ? widget.kategorijaKlavijatura?.id
                                 : null)
                         .where('name',
-                            isEqualTo: _model.searchFieldController.text != ''
-                                ? _model.searchFieldController.text
-                                : null),
+                            isEqualTo:
+                                _model.searchFieldKlavirController.text != ''
+                                    ? _model.searchFieldKlavirController.text
+                                    : null),
                     nextPageMarker: nextPageMarker,
                     pageSize: 25,
                     isStream: true,
@@ -270,7 +272,7 @@ class _ProductPageKlavijaturaWidgetState
                         image: DecorationImage(
                           fit: BoxFit.fitWidth,
                           image: Image.network(
-                            'https://images.unsplash.com/photo-1616803689943-5601631c7fec?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTR8fHdvcmtvdXR8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60',
+                            '',
                           ).image,
                         ),
                         boxShadow: [

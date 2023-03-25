@@ -471,7 +471,8 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                   isEqualTo:
                                       _model.searchFieldController.text != ''
                                           ? _model.searchFieldController.text
-                                          : null);
+                                          : null)
+                              .orderBy('created_at', descending: true);
                       if (_model.pagingController != null) {
                         final query = queryBuilder(ListingsRecord.collection);
                         if (query != _model.pagingQuery) {
@@ -502,7 +503,8 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                   isEqualTo:
                                       _model.searchFieldController.text != ''
                                           ? _model.searchFieldController.text
-                                          : null),
+                                          : null)
+                              .orderBy('created_at', descending: true),
                           nextPageMarker: nextPageMarker,
                           pageSize: 25,
                           isStream: true,

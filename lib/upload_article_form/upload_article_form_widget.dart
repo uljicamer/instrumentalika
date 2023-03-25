@@ -1,10 +1,12 @@
 import '/auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
+import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -106,6 +108,48 @@ class _UploadArticleFormWidgetState extends State<UploadArticleFormWidget> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
+                        FFButtonWidget(
+                          onPressed: () async {
+                            final listingsCreateData = {
+                              ...createListingsRecordData(
+                                name: _model.nazivArtiklaUploadController.text,
+                                description:
+                                    _model.opisArtiklaUploadController.text,
+                                price: double.tryParse(
+                                    _model.cijenaArtiklaUploadController.text),
+                                images: _model.uploadedFileUrl,
+                                createdByID: currentUserUid,
+                                specifications: _model.dropDownValue,
+                              ),
+                              'created_at': FieldValue.serverTimestamp(),
+                            };
+                            await ListingsRecord.collection
+                                .doc()
+                                .set(listingsCreateData);
+
+                            context.pushNamed('dashboard');
+                          },
+                          text: 'Objavi',
+                          options: FFButtonOptions(
+                            width: 130.0,
+                            height: 40.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            textStyle:
+                                FlutterFlowTheme.of(context).subtitle2.override(
+                                      fontFamily: 'Roboto Mono',
+                                      color: Colors.white,
+                                    ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
                         Expanded(
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
@@ -461,41 +505,38 @@ class _UploadArticleFormWidgetState extends State<UploadArticleFormWidget> {
                       validator: _model.cijenaArtiklaUploadControllerValidator
                           .asValidator(context),
                     ),
-                    FFButtonWidget(
-                      onPressed: () async {
-                        final listingsCreateData = createListingsRecordData(
-                          name: _model.nazivArtiklaUploadController.text,
-                          description: _model.opisArtiklaUploadController.text,
-                          price: double.tryParse(
-                              _model.cijenaArtiklaUploadController.text),
-                          images: _model.uploadedFileUrl,
-                        );
-                        await ListingsRecord.collection
-                            .doc()
-                            .set(listingsCreateData);
-
-                        context.pushNamed('dashboard');
-                      },
-                      text: 'Objavi',
-                      options: FFButtonOptions(
-                        width: 130.0,
-                        height: 40.0,
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle:
-                            FlutterFlowTheme.of(context).subtitle2.override(
-                                  fontFamily: 'Roboto Mono',
-                                  color: Colors.white,
-                                ),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
+                    FlutterFlowDropDown<String>(
+                      controller: _model.dropDownController ??=
+                          FormFieldController<String>(null),
+                      options: [
+                        'Bas gitara',
+                        'Gitara',
+                        'Klavijature',
+                        'Ostalo'
+                      ],
+                      onChanged: (val) =>
+                          setState(() => _model.dropDownValue = val),
+                      width: 180.0,
+                      height: 50.0,
+                      searchHintTextStyle: FlutterFlowTheme.of(context)
+                          .bodyText1
+                          .override(
+                            fontFamily: 'Roboto Mono',
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                          ),
+                      textStyle: FlutterFlowTheme.of(context).bodyText1,
+                      hintText: 'Odaberite kategoriju',
+                      searchHintText: 'Search for an item...',
+                      fillColor:
+                          FlutterFlowTheme.of(context).secondaryBackground,
+                      elevation: 2.0,
+                      borderColor: Colors.transparent,
+                      borderWidth: 0.0,
+                      borderRadius: 0.0,
+                      margin:
+                          EdgeInsetsDirectional.fromSTEB(12.0, 4.0, 12.0, 4.0),
+                      hidesUnderline: true,
+                      isSearchable: false,
                     ),
                   ],
                 ),
